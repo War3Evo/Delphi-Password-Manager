@@ -3,7 +3,7 @@ object FrmPassGen: TFrmPassGen
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = Single
-  Caption = 'Zufallspasswort generieren'
+  Caption = 'Password Generation'
   ClientHeight = 390
   ClientWidth = 320
   Position = MainFormCenter

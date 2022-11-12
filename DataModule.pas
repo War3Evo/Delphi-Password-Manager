@@ -45,11 +45,11 @@ type
     FDQuEntryIcon: TBlobField;
     FDQuEntryUserN: TStringField;
     FDQuEntryPassw: TStringField;
-    FDQuEntryURLpa: TStringField;
-    FDQuEntryNotes: TStringField;
     FDQuEntryDateC: TDateField;
     FDQuEntryDelete: TFDQuery;
     Lang: TLang;
+    FDQuEntryMemoURL: TMemoField;
+    FDQuEntryMemoNotes: TMemoField;
     procedure FDQuEntryNewRecord(DataSet: TDataSet);
     procedure FDConnectionAfterConnect(Sender: TObject);
   private
@@ -77,7 +77,8 @@ begin
       What is maximum length of a URL?  There is no fixed length, but recommended 2048.
       Since there is no maximum, we'll use BLOB for that
   }
-  // select Title, Icon, UserN, Passw, URLpa, Notes, DateC from ENTRY
+  // select Title, Icon, UserN, Passw, URLpa, Notes, DateC from ENTRY changed to
+  // select title, icon, username, password, url, notes, datetimedb from ENTRY
 
   // SQLite does not impose any length restrictions
 
@@ -88,26 +89,26 @@ begin
                                       // largest ROWID currently in use.
                                       // This is true regardless of whether or not the AUTOINCREMENT keyword is used.
 
-    'title TEXT, '+                   // Title should be longer ------- was 60      //VARCHAR2(254)
-    'username TEXT, '+                 // A username can also be a email address, which can be larger than 40 characters //VARCHAR2(254)
+    'title VARCHAR(254), '+                   // Title should be longer ------- was 60      //VARCHAR2(254)
+    'username VARCHAR(254), '+                 // A username can also be a email address, which can be larger than 40 characters //VARCHAR2(254)
                                             // This limits the Mailbox (i.e. the email address) to 254 characters
                                             // https://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690
-    'Password TEXT, '+            // 64 characters is max for sqlite as it only handles 32 bytes of password length // CHAR(64) NOT NULL
-    'URLpa BLOB, '+                         // https://mywebshosting.com/what-is-the-maximum-url-length-limit-in-browsers/    // was VARCHAR2(100)
-    'nickname TEXT, '+                 // VARCHAR2(20)
-    'CustN TEXT, '+                    // VARCHAR2(20)
-    'notes BLOB, '+                          // Limit on notes??  Nope! BLOB     2 GB LIMIT    // was VARCHAR2(400)
-    'dateAndTime TEXT, '+                   // TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
+    'password VARCHAR(64), '+            // 64 characters is max for sqlite as it only handles 32 bytes of password length // CHAR(64) NOT NULL
+    'url VARCHAR(65535), '+                         // https://mywebshosting.com/what-is-the-maximum-url-length-limit-in-browsers/    // was VARCHAR2(100)
+  //  'nickname TEXT, '+                 // VARCHAR2(20)     ???
+  //  'CustN TEXT, '+                    // VARCHAR2(20)     ???
+    'notes VARCHAR(65535), '+                          // Limit on notes??  Nope! BLOB     2 GB LIMIT    // was VARCHAR2(400)
+    'datetimedb DATETIME, '+                   // TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
                                             // REAL as Julian day numbers, the number of days since noon in Greenwich on November 24, 4714 B.C. according to the proleptic Gregorian calendar.
                                             // INTEGER as Unix Time, the number of seconds since 1970-01-01 00:00:00 UTC.
 
-    'icon BLOB)');                          // I found no references where IMAGE is a correct Database type for sqlite or Delphi
+    'icon IMAGE)');                          // I found no references where IMAGE is a correct Database type for sqlite or Delphi
 end;
 
 procedure TDM.FDQuEntryNewRecord(DataSet: TDataSet);
 begin
   // https://stackoverflow.com/questions/37066250/delphi-xe7-multidevice-sql-error-timestamp-ret-field
-  FDQuEntry.FieldByName('dateAndTime').AsSQLTimeStamp       // was  .AsDateTime := Now;
+  FDQuEntry.FieldByName('datetimedb').AsSQLTimeStamp       // was  .AsDateTime := Now;
 end;
 
 procedure TDM.LaunchBrowser(sURL: String);

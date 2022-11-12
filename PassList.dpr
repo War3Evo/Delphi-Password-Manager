@@ -13,7 +13,8 @@ uses
   VirtualKeying.Mac in 'VirtualKeying.Mac.pas',
   VirtualKeying in 'VirtualKeying.pas',
   VirtualKeying.Consts in 'VirtualKeying.Consts.pas',
-  VirtualKeying.Win in 'VirtualKeying.Win.pas';
+  VirtualKeying.Win in 'VirtualKeying.Win.pas',
+  Import in 'Import.pas' {FrmImport};
 
 {$R *.res}
 

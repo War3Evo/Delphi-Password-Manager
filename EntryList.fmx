@@ -39,7 +39,7 @@ object FrmEntryList: TFrmEntryList
         Size.Height = 601.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 49.000000000000000000
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -51,7 +51,7 @@ object FrmEntryList: TFrmEntryList
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -147,7 +147,7 @@ object FrmEntryList: TFrmEntryList
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -174,7 +174,7 @@ object FrmEntryList: TFrmEntryList
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
             Text = 'Icon'
-            TabOrder = 7
+            TabOrder = 6
           end
           object ImcIcon: TImageControl
             Bitmap.PNG = {
@@ -193,13 +193,14 @@ object FrmEntryList: TFrmEntryList
             Size.Width = 72.000000000000000000
             Size.Height = 48.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 169
+            TabOrder = 168
             OnChange = ImcIconChange
             OnClick = ImcIconClick
           end
           object EdtTitel: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             TabOrder = 0
+            MaxLength = 254
             Position.X = 8.000000000000000000
             Position.Y = 48.000000000000000000
             Size.Width = 257.000000000000000000
@@ -215,12 +216,13 @@ object FrmEntryList: TFrmEntryList
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Login Username or Email or whatever'
-            TabOrder = 170
+            TabOrder = 169
           end
           object EdtUserN: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             TabOrder = 2
             KeyboardType = EmailAddress
+            MaxLength = 254
             Position.X = 8.000000000000000000
             Position.Y = 104.000000000000000000
             Size.Width = 305.000000000000000000
@@ -245,12 +247,13 @@ object FrmEntryList: TFrmEntryList
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Password'
-            TabOrder = 171
+            TabOrder = 170
           end
           object EdtPassw: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             TabOrder = 3
             Password = True
+            MaxLength = 64
             Position.X = 8.000000000000000000
             Position.Y = 160.000000000000000000
             Size.Width = 305.000000000000000000
@@ -282,70 +285,54 @@ object FrmEntryList: TFrmEntryList
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'URL'
-            TabOrder = 172
-          end
-          object EdtURL: TEdit
-            Touch.InteractiveGestures = [LongTap, DoubleTap]
-            TabOrder = 4
-            KeyboardType = URL
-            Position.X = 8.000000000000000000
-            Position.Y = 216.000000000000000000
-            Size.Width = 305.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-            object CebURL: TClearEditButton
-              CanFocus = False
-              Cursor = crArrow
-              Size.Width = 32.000000000000000000
-              Size.Height = 28.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 0
-              Visible = False
-            end
+            TabOrder = 171
           end
           object LblNotes: TLabel
             AutoSize = True
             Position.X = 8.000000000000000000
-            Position.Y = 264.000000000000000000
+            Position.Y = 320.000000000000000000
             Size.Width = 32.000000000000000000
             Size.Height = 16.000000000000000000
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Notes'
-            TabOrder = 173
+            TabOrder = 172
           end
           object EdtNotes: TMemo
             Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
             DataDetectorTypes = []
+            MaxLength = 65535
+            OnChangeTracking = EdtNotesChangeTracking
             Position.X = 8.000000000000000000
-            Position.Y = 288.000000000000000000
+            Position.Y = 344.000000000000000000
             Size.Width = 337.000000000000000000
             Size.Height = 129.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 5
+            TabOrder = 4
             Viewport.Width = 333.000000000000000000
             Viewport.Height = 125.000000000000000000
           end
           object LblDateC: TLabel
             AutoSize = True
             Position.X = 8.000000000000000000
-            Position.Y = 424.000000000000000000
+            Position.Y = 480.000000000000000000
             Size.Width = 68.000000000000000000
             Size.Height = 16.000000000000000000
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Date created'
-            TabOrder = 174
+            TabOrder = 173
           end
           object DteDateC: TDateEdit
             ShowClearButton = True
-            Date = 42673.000000000000000000
+            Date = 44877.000000000000000000
+            TodayDefault = True
             Position.X = 8.000000000000000000
-            Position.Y = 440.000000000000000000
+            Position.Y = 504.000000000000000000
             Size.Width = 161.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 6
+            TabOrder = 5
           end
           object SbtCopUsr: TSpeedButton
             Hint = 'Copy username'
@@ -470,6 +457,39 @@ object FrmEntryList: TFrmEntryList
               ShadowColor = xFF0DBF0D
             end
           end
+          object LblNotesMaxSize: TLabel
+            Position.X = 187.000000000000000000
+            Position.Y = 496.000000000000000000
+            Size.Width = 158.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            Text = '0 / 5000 characters'
+            TabOrder = 178
+          end
+          object MemoURL: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            MaxLength = 65535
+            TextSettings.WordWrap = True
+            Position.X = 8.000000000000000000
+            Position.Y = 224.000000000000000000
+            Size.Width = 304.000000000000000000
+            Size.Height = 88.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 179
+            Viewport.Width = 300.000000000000000000
+            Viewport.Height = 84.000000000000000000
+            object CebURL: TSpeedButton
+              StyledSettings = [Family, FontColor]
+              Position.X = 262.000000000000000000
+              Position.Y = 8.000000000000000000
+              Size.Width = 32.000000000000000000
+              Size.Height = 22.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'X'
+              TextSettings.Font.Size = 16.000000000000000000
+            end
+          end
         end
       end
     end
@@ -513,36 +533,45 @@ object FrmEntryList: TFrmEntryList
       Viewport.Height = 101.000000000000000000
       object LbiImport: TListBoxItem
         TextSettings.HorzAlign = Center
-        StyledSettings = [Family, Size, Style, FontColor]
+        StyledSettings = [Family, Size, Style]
+        HitTest = True
         Size.Width = 185.000000000000000000
         Size.Height = 32.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         Text = 'Import...'
+        OnMouseEnter = LbiImportMouseEnter
+        OnMouseLeave = LbiImportMouseLeave
         OnClick = LbiImportClick
       end
       object LbiSettings: TListBoxItem
         Selectable = False
         TextSettings.HorzAlign = Center
-        StyledSettings = [Family, Size, Style, FontColor]
+        StyledSettings = [Family, Size, Style]
+        HitTest = True
         Position.Y = 32.000000000000000000
         Size.Width = 185.000000000000000000
         Size.Height = 32.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         Text = 'Settings'
+        OnMouseEnter = LbiImportMouseEnter
+        OnMouseLeave = LbiImportMouseLeave
         OnClick = LbiSettingsClick
       end
       object LbiInfo: TListBoxItem
         Selectable = False
         TextSettings.HorzAlign = Center
-        StyledSettings = [Family, Size, Style, FontColor]
+        StyledSettings = [Family, Size, Style]
+        HitTest = True
         Position.Y = 64.000000000000000000
         Size.Width = 185.000000000000000000
         Size.Height = 32.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         Text = 'Info'
+        OnMouseEnter = LbiImportMouseEnter
+        OnMouseLeave = LbiImportMouseLeave
         OnClick = LbiInfoClick
       end
     end
@@ -552,7 +581,7 @@ object FrmEntryList: TFrmEntryList
       item
       end>
     Left = 104
-    Top = 408
+    Top = 464
   end
   object ToolBar: TToolBar
     Size.Width = 354.000000000000000000
@@ -663,84 +692,84 @@ object FrmEntryList: TFrmEntryList
   object BindSourceDB: TBindSourceDB
     DataSet = DM.FDQuEntry
     ScopeMappings = <>
-    Left = 200
-    Top = 408
+    Left = 192
+    Top = 464
   end
   object BindingsList: TBindingsList
     Methods = <>
     OutputConverters = <>
     Left = 288
-    Top = 408
+    Top = 464
     object LinkListControlToField1: TLinkListControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
-      FieldName = 'Title'
+      FieldName = 'title'
       Control = ListView
       FillExpressions = <
         item
-          SourceMemberName = 'UserN'
+          SourceMemberName = 'username'
           ControlMemberName = 'Detail'
         end
         item
-          SourceMemberName = 'Icon'
+          SourceMemberName = 'icon'
           ControlMemberName = 'Bitmap'
         end>
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end
     object LinkControlToField1: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
-      FieldName = 'Notes'
+      FieldName = 'notes'
       Control = EdtNotes
       Track = False
     end
     object LinkControlToField2: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
-      FieldName = 'UserN'
+      FieldName = 'username'
       Control = EdtUserN
       Track = False
     end
-    object LinkControlToField3: TLinkControlToField
-      Category = 'Schnelle Bindungen'
-      DataSource = BindSourceDB
-      FieldName = 'URLpa'
-      Control = EdtURL
-      Track = False
-    end
     object LinkControlToField4: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
       FieldName = 'Title'
       Control = EdtTitel
       Track = False
     end
     object LinkControlToField5: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
-      FieldName = 'DateC'
+      FieldName = 'datetimedb'
       Control = DteDateC
       Track = False
     end
     object LinkControlToField6: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
-      FieldName = 'Passw'
+      FieldName = 'password'
       Control = EdtPassw
       Track = False
     end
     object LinkControlToField9: TLinkControlToField
-      Category = 'Schnelle Bindungen'
+      Category = 'Fast bindings'
       DataSource = BindSourceDB
       FieldName = 'Icon'
       Control = ImcIcon
       Track = False
     end
+    object LinkControlToField7: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB
+      FieldName = 'url'
+      Control = MemoURL
+      Track = False
+    end
   end
   object ActionList: TActionList
     Left = 288
-    Top = 352
+    Top = 400
     object ChangeTabAction: TChangeTabAction
       Category = 'Tab'
     end
@@ -965,12 +994,12 @@ object FrmEntryList: TFrmEntryList
             SourceRect.Bottom = 48.000000000000000000
           end>
       end>
-    Left = 200
-    Top = 352
+    Left = 192
+    Top = 400
   end
   object GestureManager: TGestureManager
     Sensitivity = 80.000000000000000000
     Left = 104
-    Top = 352
+    Top = 400
   end
 end

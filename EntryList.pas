@@ -62,8 +62,6 @@ type
     LblPassw: TLabel;
     EdtPassw: TEdit;
     LblURLpa: TLabel;
-    EdtURL: TEdit;
-    CebURL: TClearEditButton;
     LblNotes: TLabel;
     EdtNotes: TMemo;
     LblDateC: TLabel;
@@ -72,7 +70,6 @@ type
     LinkListControlToField1: TLinkListControlToField;
     LinkControlToField1: TLinkControlToField;
     LinkControlToField2: TLinkControlToField;
-    LinkControlToField3: TLinkControlToField;
     LinkControlToField4: TLinkControlToField;
     LinkControlToField5: TLinkControlToField;
     LinkControlToField6: TLinkControlToField;
@@ -109,6 +106,10 @@ type
     ShEPopup: TShadowEffect;
     EdbPasGen: TEditButton;
     LbiImport: TListBoxItem;
+    LblNotesMaxSize: TLabel;
+    MemoURL: TMemo;
+    LinkControlToField7: TLinkControlToField;
+    CebURL: TSpeedButton;
     procedure ImcIconChange(Sender: TObject);
     procedure ImcIconClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -141,6 +142,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdbPasGenClick(Sender: TObject);
     procedure LbiImportClick(Sender: TObject);
+    procedure EdtNotesChangeTracking(Sender: TObject);
+    procedure LbiImportMouseEnter(Sender: TObject);
+    procedure LbiImportMouseLeave(Sender: TObject);
   private
     { Private-Deklarationen }
     FService : IFMXVirtualKeyboardToolbarService;
@@ -161,9 +165,11 @@ var
 
 implementation
 
+// A bunch of things uses LiveBindings
+
 {$R *.fmx}
 
-uses DataModule, OpenImg, Info, Settings, PassGen, VirtualKeying, Import;
+uses DataModule, OpenImg, Info, Settings, PassGen, VirtualKeying, Import; //, CodeSiteLogging;
 
 procedure TFrmEntryList.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -297,6 +303,11 @@ begin
   EdtPassw.Password := not EdbPassw.IsPressed;
 end;
 
+procedure TFrmEntryList.EdtNotesChangeTracking(Sender: TObject);
+begin
+  LblNotesMaxSize.Text := EdtNotes.Text.Length.ToString + ' / 65535  ';
+end;
+
 procedure TFrmEntryList.EdbPasGenClick(Sender: TObject);
 begin
   HidePopup;
@@ -306,7 +317,7 @@ begin
     begin
       if ModalResult = mrOk then
         if DM.FDQuEntry.CanModify = true then
-          DM.FDQuEntry.FieldByName('Passw').AsString := FrmPassGen.EdtResul.Text;
+          DM.FDQuEntry.FieldByName('password').AsString := FrmPassGen.EdtResul.Text;
     end);
 end;
 
@@ -390,7 +401,7 @@ begin
   // nStatus = 3 => Edit mode
   case nStatus of
   0: LblToolBar.Text := 'Password Manager';    // was IJP Password Manager
-  1: LblToolBar.Text := DM.FDQuEntry.FieldByName('Title').AsString;
+  1: LblToolBar.Text := DM.FDQuEntry.FieldByName('title').AsString;                /////////////////////////////
   2: LblToolBar.Text := Translate('Add entry');
   3: LblToolBar.Text := Translate('Edit entry');
   end;
@@ -436,7 +447,7 @@ begin
     begin
         if AResult = mrOk then
         begin
-          DM.LaunchBrowser(EdtURL.Text);
+          DM.LaunchBrowser(MemoURL.Text);
           Sleep(3000);
           TVirtualKeySequence.Execute(EdtPassw.Text);
         end;
@@ -510,6 +521,24 @@ begin
     begin
 
     end);
+end;
+
+procedure TFrmEntryList.LbiImportMouseEnter(Sender: TObject);
+begin
+  //CodeSite.Send('Mouse Enter');
+  (Sender AS TListBoxItem).BeginUpdate;
+  (Sender AS TListBoxItem).TextSettings.FontColor := TAlphaColorRec.Green;
+  (Sender AS TListBoxItem).TextSettings.Change;
+  (Sender AS TListBoxItem).EndUpdate;
+end;
+
+procedure TFrmEntryList.LbiImportMouseLeave(Sender: TObject);
+begin
+  //CodeSite.Send('Mouse Leave');
+  (Sender AS TListBoxItem).BeginUpdate;
+  (Sender AS TListBoxItem).TextSettings.FontColor := TAlphaColorRec.Black;
+  (Sender AS TListBoxItem).TextSettings.Change;
+  (Sender AS TListBoxItem).EndUpdate;
 end;
 
 procedure TFrmEntryList.LbiInfoClick(Sender: TObject);

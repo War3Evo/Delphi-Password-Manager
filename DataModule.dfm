@@ -6,6 +6,7 @@ object DM: TDM
     Params.Strings = (
       'LockingMode=Normal'
       'DriverID=SQLite')
+    Connected = True
     LoginDialog = FDGUIxLoginDialog
     LoginPrompt = False
     AfterConnect = FDConnectionAfterConnect
@@ -23,51 +24,63 @@ object DM: TDM
     Connection = FDConnection
     UpdateOptions.AssignedValues = [uvCheckReadOnly]
     SQL.Strings = (
-      'select Title, Icon, UserN, Passw, URLpa, Notes, DateC from ENTRY')
+      
+        'select title, icon, username, password, url, notes, datetimedb f' +
+        'rom ENTRY')
     Left = 200
     Top = 16
     object FDQuEntryTitle: TStringField
-      DisplayLabel = 'Name'
-      FieldName = 'Title'
-      Origin = 'Title'
+      DisplayLabel = 'Title'
+      FieldName = 'title'
+      KeyFields = 'title'
+      Origin = 'title'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
-      Size = 60
+      Size = 254
     end
     object FDQuEntryIcon: TBlobField
-      FieldName = 'Icon'
-      Origin = 'Icon'
+      DisplayLabel = 'Icon'
+      FieldName = 'icon'
+      KeyFields = 'icon'
+      Origin = 'icon'
     end
     object FDQuEntryUserN: TStringField
-      DisplayLabel = 'Benutzer'
-      FieldName = 'UserN'
-      Origin = 'UserN'
-      Size = 40
+      DisplayLabel = 'Username'
+      FieldName = 'username'
+      KeyFields = 'username'
+      Origin = 'username'
+      Size = 254
     end
     object FDQuEntryPassw: TStringField
-      DisplayLabel = 'Passwort'
-      FieldName = 'Passw'
-      Origin = 'Passw'
+      DisplayLabel = 'Password'
+      FieldName = 'password'
+      KeyFields = 'password'
+      Origin = 'password'
       Required = True
       FixedChar = True
       Size = 64
     end
-    object FDQuEntryURLpa: TStringField
-      DisplayLabel = 'URL'
-      FieldName = 'URLpa'
-      Origin = 'URLpa'
-      Size = 100
-    end
-    object FDQuEntryNotes: TStringField
-      DisplayLabel = 'Kommentare'
-      FieldName = 'Notes'
-      Origin = 'Notes'
-      Size = 400
-    end
     object FDQuEntryDateC: TDateField
-      DisplayLabel = 'Datum erstellt'
-      FieldName = 'DateC'
-      Origin = 'DateC'
+      DisplayLabel = 'Date created'
+      FieldName = 'datetimedb'
+      KeyFields = 'datetimedb'
+      Origin = 'datetimedb'
+    end
+    object FDQuEntryMemoURL: TMemoField
+      DisplayLabel = 'URL'
+      FieldName = 'url'
+      KeyFields = 'url'
+      Origin = 'url'
+      BlobType = ftMemo
+      Size = 65535
+    end
+    object FDQuEntryMemoNotes: TMemoField
+      DisplayLabel = 'Notes'
+      FieldName = 'notes'
+      KeyFields = 'notes'
+      Origin = 'notes'
+      BlobType = ftMemo
+      Size = 65535
     end
   end
   object dsEntry: TDataSource
@@ -94,12 +107,12 @@ object DM: TDM
   object FDQuEntryDelete: TFDQuery
     Connection = FDConnection
     SQL.Strings = (
-      'delete from ENTRY where Title = :Title ')
+      'delete from ENTRY where id = :id ')
     Left = 200
     Top = 72
     ParamData = <
       item
-        Name = 'TITLE'
+        Name = 'ID'
         ParamType = ptInput
       end>
   end

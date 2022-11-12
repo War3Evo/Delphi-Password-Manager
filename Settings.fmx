@@ -3,7 +3,7 @@ object FrmSettings: TFrmSettings
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = Single
-  Caption = 'Einstellungen'
+  Caption = 'Settings'
   ClientHeight = 480
   ClientWidth = 320
   Position = MainFormCenter

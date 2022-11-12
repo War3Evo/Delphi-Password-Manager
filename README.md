@@ -1,5 +1,9 @@
-Translated to English:
 # Delphi-Password-Manager
+
+11/12/2022
+- Many changes
+
+Translated to English:
 A simple password manager developed in Delphi
 
 The code is free for changes, I hope someone can improve it and add new features.
