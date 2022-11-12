@@ -389,4 +389,9 @@ object DM: TDM
       790027003D00410064006900630069006F006E0061007200200065006E007400
       72006100640061000D000A00}
   end
+  object FDQueryImportAdd: TFDQuery
+    Connection = FDConnection
+    Left = 200
+    Top = 240
+  end
 end

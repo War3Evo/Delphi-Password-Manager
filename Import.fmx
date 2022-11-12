@@ -67,4 +67,8 @@ object FrmImport: TFrmImport
     Left = 104
     Top = 104
   end
+  object AniIndicator1: TAniIndicator
+    Position.X = 96.000000000000000000
+    Position.Y = 97.000000000000000000
+  end
 end

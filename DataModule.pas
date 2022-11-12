@@ -50,6 +50,7 @@ type
     Lang: TLang;
     FDQuEntryMemoURL: TMemoField;
     FDQuEntryMemoNotes: TMemoField;
+    FDQueryImportAdd: TFDQuery;
     procedure FDQuEntryNewRecord(DataSet: TDataSet);
     procedure FDConnectionAfterConnect(Sender: TObject);
   private
