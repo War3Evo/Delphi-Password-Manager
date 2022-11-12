@@ -5,8 +5,9 @@ object DM: TDM
   object FDConnection: TFDConnection
     Params.Strings = (
       'LockingMode=Normal'
+      'Encrypt=aes-256'
+      'DateTimeFormat=DateTime'
       'DriverID=SQLite')
-    Connected = True
     LoginDialog = FDGUIxLoginDialog
     LoginPrompt = False
     AfterConnect = FDConnectionAfterConnect
@@ -61,6 +62,7 @@ object DM: TDM
       Size = 64
     end
     object FDQuEntryDateC: TDateField
+      AutoGenerateValue = arDefault
       DisplayLabel = 'Date created'
       FieldName = 'datetimedb'
       KeyFields = 'datetimedb'

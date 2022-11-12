@@ -738,13 +738,6 @@ object FrmEntryList: TFrmEntryList
       Control = EdtTitel
       Track = False
     end
-    object LinkControlToField5: TLinkControlToField
-      Category = 'Fast bindings'
-      DataSource = BindSourceDB
-      FieldName = 'datetimedb'
-      Control = DteDateC
-      Track = False
-    end
     object LinkControlToField6: TLinkControlToField
       Category = 'Fast bindings'
       DataSource = BindSourceDB
@@ -765,6 +758,13 @@ object FrmEntryList: TFrmEntryList
       FieldName = 'url'
       Control = MemoURL
       Track = False
+    end
+    object LinkPropertyToFieldDate: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB
+      FieldName = 'datetimedb'
+      Component = DteDateC
+      ComponentProperty = 'Date'
     end
   end
   object ActionList: TActionList

@@ -71,7 +71,6 @@ type
     LinkControlToField1: TLinkControlToField;
     LinkControlToField2: TLinkControlToField;
     LinkControlToField4: TLinkControlToField;
-    LinkControlToField5: TLinkControlToField;
     LinkControlToField6: TLinkControlToField;
     LinkControlToField9: TLinkControlToField;
     ActionList: TActionList;
@@ -110,6 +109,7 @@ type
     MemoURL: TMemo;
     LinkControlToField7: TLinkControlToField;
     CebURL: TSpeedButton;
+    LinkPropertyToFieldDate: TLinkPropertyToField;
     procedure ImcIconChange(Sender: TObject);
     procedure ImcIconClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -178,6 +178,7 @@ end;
 
 procedure TFrmEntryList.FormCreate(Sender: TObject);
 begin
+  TabControl.TabIndex := 0;
   RetPopup.Position.Y := -RetPopup.Height;
   TSearchBox(ListView.Controls[1]).Height := 30;
   TSearchBox(ListView.Controls[1]).OnClick := ListView.OnMouseEnter;

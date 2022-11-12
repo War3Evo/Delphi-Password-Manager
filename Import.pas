@@ -13,7 +13,6 @@ type
     CbxImport: TComboBox;
     LbiKaspersky: TListBoxItem;
     OpenDialogImport: TOpenDialog;
-    BtnOpen: TButton;
     MemoImport: TMemo;
     BtnImport: TButton;
     AniIndicator1: TAniIndicator;
@@ -32,12 +31,31 @@ implementation
 
 {$R *.fmx}
 
-uses DataModule;
+uses DataModule, EntryList, CodeSiteLogging;
+
+
+////////////////////////////////////////////////////   GOING TO HAVE TO FIX THIS AREA
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////  NEED TO FIX SPLITIT SO THAT IT ONLY CUTS IN HALF AND NOT MULTIPLE!
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
 
 procedure pSplitIT(BreakString, BaseString: string; StringList: TStrings; ForceRightSideOfBreakString: boolean = false; Offset: integer = 1);
 var
   EndOfCurrentString: byte;
-  iLengthenBreakString: integer;
+  iLengthenBreakString, iCount: integer;
 begin
   StringList.Clear;
 
@@ -62,6 +80,8 @@ begin
       StringList.add(Copy(BaseString, 1, EndOfCurrentString - 1));
     BaseString := Copy(BaseString, EndOfCurrentString + length(BreakString), length(BaseString) - EndOfCurrentString);
 
+    if Pos(BreakString, BaseString) > 0 then break;
+
   until EndOfCurrentString = 0;
 end;
 
@@ -71,6 +91,12 @@ var
   s: string;
   iTmp : integer;
   sWebsiteName,sURL,sLoginName,sLogin,sPassword,sComment,sName,sText: string;
+
+//                 'values(:title, :username, :password, :url, :notes, :datetimedb)',
+  srTitle, srUsername, srPassword,srURL,srNotes: string;
+
+  srDateTimedb: TDate;
+
   OutPutList: TStringList;
   AddEntry, SkipReadLine: boolean;
 begin
@@ -90,48 +116,76 @@ begin
     if SkipReadLine = true then
     begin
       SkipReadLine := false;
+      CodeSite.Send('SkipReadLine = true');
     end
     else
     begin
       Readln(Txt, s);
+      CodeSite.Send('Readln(Txt, s):'+s);
     end;
+
+      srTitle := '';
+      srUsername := '';
+      srPassword := '';
+      srURL := '';
+      srNotes := '';
 
     if Pos('Website name:', s) > 0 then
       begin
-        pSplitIT('Website name:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then sWebsiteName := Trim(OutPutList[1]);
+        CodeSite.Send('BeforeSplitIt:Website name:'+s);
+        pSplitIT(':',s,OutPutList,true,1); // split on right side
+        CodeSite.Send('Website name:Debug:OutPutList[0]:'+OutPutList[0]);
+        if OutPutList.Count > 0 then sWebsiteName := Trim(OutPutList[0]);
+        srTitle := sWebsiteName;
+        CodeSite.Send('Website name:srTitle:'+srTitle);
         if not Eof(Txt) then Readln(Txt, s);
         AddEntry := true;
       end;
 
     if Pos('Website URL:', s) > 0 then
       begin
-        pSplitIT('Website URL:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then sURL := Trim(OutPutList[1]);
+        CodeSite.Send('BeforeSplitIt:URL:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Website URL:Debug:OutPutList[0]:'+OutPutList[0]);
+        if OutPutList.Count > 0 then sURL := Trim(OutPutList[0]);
+        srURL := sURL;
+        CodeSite.Send('srURL:'+srURL);
         if not Eof(Txt) then Readln(Txt, s);
         AddEntry := true;
       end;
 
     if Pos('Login name:', s) > 0 then
       begin
-        pSplitIT('Login name:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then sLoginName := Trim(OutPutList[1]);
+        CodeSite.Send('BeforeSplitIt:Login name:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Login name:Debug:OutPutList[1]:'+OutPutList[1]);
+        if OutPutList.Count > 0 then sLoginName := Trim(OutPutList[1]);
+        srUsername := sLoginName;
+        CodeSite.Send('srUsername:'+srUsername);
         if not Eof(Txt) then Readln(Txt, s);
         AddEntry := true;
       end;
 
     if Pos('Password:', s) > 0 then
       begin
-        pSplitIT('Password:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then sPassword := Trim(OutPutList[1]);
+        CodeSite.Send('BeforeSplitIt:Password:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Password:Debug:OutPutList[1]:'+OutPutList[1]);
+        if OutPutList.Count > 0 then sPassword := Trim(OutPutList[1]);
+        srPassword := sPassword;
+        CodeSite.Send('srPassword:'+srPassword);
         if not Eof(Txt) then Readln(Txt, s);
         AddEntry := true;
       end;
 
     if Pos('Name:', s) > 0 then
       begin
-        pSplitIT('Name:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then sName := Trim(OutPutList[1]);
+        CodeSite.Send('BeforeSplitIt:Name:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Name:Debug:OutPutList[1]:'+OutPutList[1]);
+        if OutPutList.Count > 0 then sName := Trim(OutPutList[1]);
+        srTitle := sName;
+        CodeSite.Send('Name:srTitle:'+srTitle);
         if not Eof(Txt) then Readln(Txt, s);
         AddEntry := true;
       end;
@@ -140,8 +194,10 @@ begin
 
     if Pos('Comment:', s) > 0 then
       begin
-        pSplitIT('Comment:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then
+        CodeSite.Send('BeforeSplitIt:Comment:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Comment:Debug:OutPutList[1]:'+OutPutList[1]);
+        if OutPutList.Count > 0 then
         begin
           sComment := Trim(OutPutList[1]);
           while not Eof(Txt) do
@@ -160,17 +216,21 @@ begin
             end
             else
               begin
-                sComment := sComment + s;
+                sComment := sComment + #13#10 + s;
               end;
           end;
+          srNotes := sComment;
+          CodeSite.Send('srNotes:'+srNotes);
           AddEntry := true;
         end;
       end;
 
     if Pos('Text:', s) > 0 then
       begin
-        pSplitIT('Text:',s,OutPutList,true); // split on right side
-        if OutPutList.Count > 1 then
+        CodeSite.Send('BeforeSplitIt:Text:'+s);
+        pSplitIT(':',s,OutPutList,false,1); // split on right side
+        CodeSite.Send('Text:Debug:OutPutList[1]:'+OutPutList[1]);
+        if OutPutList.Count > 0 then
         begin
           sText := Trim(OutPutList[1]);
           while not Eof(Txt) do
@@ -189,21 +249,41 @@ begin
             end
             else
               begin
-                sText := sText + s;
+                sText := sText + #13#10 + s;
               end;
           end;
+          srNotes := sText;
+          CodeSite.Send('srNotes:'+srNotes);
           AddEntry := true;
         end;
       end;
 
+    srDateTimedb := Now();
+
     // Save to Database
     if AddEntry = true then
      begin
-
       // STUCK RIGHT HERE TRYING TO ADD / INSERT INTO DATABASE BY CODE
+        // Insert a record
+    //  dbMain.ExecSQL('insert into Categories(CategoryName, Description, Picture) ' +
+            //     'values(:N, :D, :P)', ['New category', 'New description', $0334]);
 
-      DM.FDQueryImportAdd.SQ
+            //srTitle, srUsername, srPassword,srURL,srNotes: string;
+
+      DM.FDConnection.ExecSQL('insert into ENTRY(title, username, password, url, notes, datetimedb) ' +
+                 'values(:title, :username, :password, :url, :notes, :datetimedb)',
+                  [srTitle, srUsername, srPassword, srURL, srNotes, srDateTimedb]);
+      CodeSite.Send('after DM.FDConnection.ExecSQL');
+
+      //DM.FDQuEntry.ExecSQL;
+      srTitle := '';
+      srUsername := '';
+      srPassword := '';
+      srURL := '';
+      srNotes := '';
+      AddEntry := false;
      end;
+
   end;
   CloseFile(Txt);
 
@@ -211,7 +291,7 @@ begin
 
   AniIndicator1.Enabled := false;
 
-  result := true
+  result := true;
 end;
 
 procedure TFrmImport.BtnImportClick(Sender: TObject);
@@ -220,7 +300,11 @@ begin
 
   // Display the open file dialog
   if OpenDialogImport.Execute
-    then ShowMessage('File : '+OpenDialogImport.FileName)
+    then
+    begin
+      //ShowMessage('File : '+OpenDialogImport.FileName)
+      if ReadTextFile(OpenDialogImport.FileName) = false then ShowMessage('File : '+OpenDialogImport.FileName+' not found');
+    end
     else ShowMessage('Open file was cancelled');
 end;
 

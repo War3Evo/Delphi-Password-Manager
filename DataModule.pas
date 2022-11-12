@@ -99,9 +99,9 @@ begin
   //  'nickname TEXT, '+                 // VARCHAR2(20)     ???
   //  'CustN TEXT, '+                    // VARCHAR2(20)     ???
     'notes VARCHAR(65535), '+                          // Limit on notes??  Nope! BLOB     2 GB LIMIT    // was VARCHAR2(400)
-    'datetimedb DATETIME, '+                   // TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
+    'datetimedb DATE, '+                   // TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
                                             // REAL as Julian day numbers, the number of days since noon in Greenwich on November 24, 4714 B.C. according to the proleptic Gregorian calendar.
-                                            // INTEGER as Unix Time, the number of seconds since 1970-01-01 00:00:00 UTC.
+                                            // INTEGER as Unix Time, the number of seconds since 1970-01-01 00:00:00 UTC.    DATETIME
 
     'icon IMAGE)');                          // I found no references where IMAGE is a correct Database type for sqlite or Delphi
 end;

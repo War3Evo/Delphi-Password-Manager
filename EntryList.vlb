@@ -136,8 +136,9 @@ Visible=True
 Coordinates=635,1,66,33
 
 [DteDateC]
-Coordinates=750,20,115,51
+Coordinates=750,20,115,69
 Visible=True
+ExplicitSubNodes=Date
 
 [GestureManager]
 Coordinates=396,589,95,33
@@ -193,4 +194,7 @@ Visible=True
 
 [CebURL]
 Coordinates=206,1,54,51
+
+[DM.FDQueryImportAdd]
+Coordinates=788,373,128,51
 

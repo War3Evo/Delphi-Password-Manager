@@ -22,7 +22,7 @@ object FrmImport: TFrmImport
     ItemIndex = 0
     Position.X = 16.000000000000000000
     Position.Y = 41.000000000000000000
-    Size.Width = 136.000000000000000000
+    Size.Width = 224.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
@@ -35,12 +35,6 @@ object FrmImport: TFrmImport
       Text = 'Kaspersky'
     end
   end
-  object BtnOpen: TButton
-    Position.X = 160.000000000000000000
-    Position.Y = 41.000000000000000000
-    TabOrder = 3
-    Text = 'Open'
-  end
   object MemoImport: TMemo
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
     DataDetectorTypes = []
@@ -49,14 +43,14 @@ object FrmImport: TFrmImport
     Size.Width = 224.000000000000000000
     Size.Height = 114.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 4
-    Viewport.Width = 220.000000000000000000
-    Viewport.Height = 110.000000000000000000
+    TabOrder = 3
+    Viewport.Width = 224.000000000000000000
+    Viewport.Height = 114.000000000000000000
   end
   object BtnImport: TButton
     Position.X = 160.000000000000000000
     Position.Y = 193.000000000000000000
-    TabOrder = 5
+    TabOrder = 4
     Text = 'Import'
     OnClick = BtnImportClick
   end
