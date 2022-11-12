@@ -30,7 +30,7 @@ uses
   FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.UI, FireDAC.Stan.Intf, FireDAC.FMXUI.Login, FireDAC.Comp.Client, fmx.dialogs,
-  FMX.Types, System.UITypes;
+  FMX.Types, System.UITypes, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TDM = class(TDataModule)
@@ -70,22 +70,44 @@ implementation
 
 procedure TDM.FDConnectionAfterConnect(Sender: TObject);
 begin
+  // The maximum length of a VARCHAR2 data type is 4000 bytes.
+
+  // SQLite blobs have an absolute maximum size of 2GB and a default maximum size of 1GB.
+  {
+      What is maximum length of a URL?  There is no fixed length, but recommended 2048.
+      Since there is no maximum, we'll use BLOB for that
+  }
+  // select Title, Icon, UserN, Passw, URLpa, Notes, DateC from ENTRY
+
+  // SQLite does not impose any length restrictions
+
   FDConnection.ExecSQL(
   'CREATE TABLE IF NOT EXISTS ENTRY( '+
-    'Title VARCHAR2(60) NOT NULL, '+
-    'UserN VARCHAR2(40), '+
-    'Passw CHAR(64) NOT NULL, '+
-    'URLpa VARCHAR2(100), '+
-    'NickN VARCHAR2(20), '+
-    'CustN VARCHAR2(20), '+
-    'Notes VARCHAR2(400), '+
-    'DateC DATE, '+
-    'Icon IMAGE)');
+    'id INTEGER PRIMARY KEY, '+          // On an INSERT, if the ROWID or INTEGER PRIMARY KEY column is not explicitly given a value,
+                                      // then it will be filled automatically with an unused integer, usually one more than the
+                                      // largest ROWID currently in use.
+                                      // This is true regardless of whether or not the AUTOINCREMENT keyword is used.
+
+    'title TEXT, '+                   // Title should be longer ------- was 60      //VARCHAR2(254)
+    'username TEXT, '+                 // A username can also be a email address, which can be larger than 40 characters //VARCHAR2(254)
+                                            // This limits the Mailbox (i.e. the email address) to 254 characters
+                                            // https://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690
+    'Password TEXT, '+            // 64 characters is max for sqlite as it only handles 32 bytes of password length // CHAR(64) NOT NULL
+    'URLpa BLOB, '+                         // https://mywebshosting.com/what-is-the-maximum-url-length-limit-in-browsers/    // was VARCHAR2(100)
+    'nickname TEXT, '+                 // VARCHAR2(20)
+    'CustN TEXT, '+                    // VARCHAR2(20)
+    'notes BLOB, '+                          // Limit on notes??  Nope! BLOB     2 GB LIMIT    // was VARCHAR2(400)
+    'dateAndTime TEXT, '+                   // TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
+                                            // REAL as Julian day numbers, the number of days since noon in Greenwich on November 24, 4714 B.C. according to the proleptic Gregorian calendar.
+                                            // INTEGER as Unix Time, the number of seconds since 1970-01-01 00:00:00 UTC.
+
+    'icon BLOB)');                          // I found no references where IMAGE is a correct Database type for sqlite or Delphi
 end;
 
 procedure TDM.FDQuEntryNewRecord(DataSet: TDataSet);
 begin
-  FDQuEntry.FieldByName('DateC').AsDateTime := Now;
+  // https://stackoverflow.com/questions/37066250/delphi-xe7-multidevice-sql-error-timestamp-ret-field
+  FDQuEntry.FieldByName('dateAndTime').AsSQLTimeStamp       // was  .AsDateTime := Now;
 end;
 
 procedure TDM.LaunchBrowser(sURL: String);

@@ -1,7 +1,7 @@
 object DM: TDM
-  OldCreateOrder = False
   Height = 350
   Width = 347
+  PixelsPerInch = 96
   object FDConnection: TFDConnection
     Params.Strings = (
       'LockingMode=Normal'
@@ -104,7 +104,7 @@ object DM: TDM
       end>
   end
   object Lang: TLang
-    Lang = 'de'
+    Lang = 'en'
     Left = 200
     Top = 168
     ResourcesBin = {

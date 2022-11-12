@@ -23,7 +23,7 @@ uses
   FMX.Gestures, System.ImageList, FMX.Ani, System.IOUtils, Data.DB,
 
 {$IFDEF MSWINDOWS}
-  Winapi.ShellAPI, Winapi.Windows, FMX.DialogService.Sync
+  Winapi.ShellAPI, Winapi.Windows, FMX.DialogService.Sync, FMX.Memo.Types
 {$ENDIF MSWINDOWS}
 
 {$IFDEF ANDROID}
@@ -108,6 +108,7 @@ type
     FAnPopup: TFloatAnimation;
     ShEPopup: TShadowEffect;
     EdbPasGen: TEditButton;
+    LbiImport: TListBoxItem;
     procedure ImcIconChange(Sender: TObject);
     procedure ImcIconClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -139,6 +140,7 @@ type
     procedure ListViewMouseEnter(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdbPasGenClick(Sender: TObject);
+    procedure LbiImportClick(Sender: TObject);
   private
     { Private-Deklarationen }
     FService : IFMXVirtualKeyboardToolbarService;
@@ -161,7 +163,7 @@ implementation
 
 {$R *.fmx}
 
-uses DataModule, OpenImg, Info, Settings, PassGen, VirtualKeying;
+uses DataModule, OpenImg, Info, Settings, PassGen, VirtualKeying, Import;
 
 procedure TFrmEntryList.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -387,7 +389,7 @@ begin
   // nStatus = 2 => Add mode
   // nStatus = 3 => Edit mode
   case nStatus of
-  0: LblToolBar.Text := 'IJP Password Manager';
+  0: LblToolBar.Text := 'Password Manager';    // was IJP Password Manager
   1: LblToolBar.Text := DM.FDQuEntry.FieldByName('Title').AsString;
   2: LblToolBar.Text := Translate('Add entry');
   3: LblToolBar.Text := Translate('Edit entry');
@@ -493,6 +495,17 @@ begin
   HidePopup;
   FrmSettings := TFrmSettings.Create(nil);
   FrmSettings.ShowModal(
+    procedure(ModalResult: TModalResult)
+    begin
+
+    end);
+end;
+
+procedure TFrmEntryList.LbiImportClick(Sender: TObject);
+begin
+  HidePopup;
+  FrmImport := TFrmImport.Create(nil);
+  FrmImport.ShowModal(
     procedure(ModalResult: TModalResult)
     begin
 

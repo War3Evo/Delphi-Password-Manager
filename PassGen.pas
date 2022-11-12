@@ -26,6 +26,7 @@ type
     BtnCancel: TButton;
     BtnAccept: TButton;
     Label1: TLabel;
+    ChbSpeciEdit: TEdit;
     procedure BtnGenerClick(Sender: TObject);
     procedure ChbPModeClick(Sender: TObject);
     procedure ChbSpeciClick(Sender: TObject);
@@ -40,6 +41,7 @@ type
 
 var
   FrmPassGen: TFrmPassGen;
+  cSpecial: string;
 
 implementation
 
@@ -49,6 +51,7 @@ procedure TFrmPassGen.ChbPModeClick(Sender: TObject);
 begin
   BtnGener.Enabled := ChbLower.IsChecked or ChbUpper.IsChecked or
     ChbNumbe.IsChecked or ChbSpeci.IsChecked;
+  ChbSpeciEdit.Enabled := ChbSpeci.IsChecked;
 end;
 
 procedure TFrmPassGen.ChbSpeciClick(Sender: TObject);
@@ -59,6 +62,11 @@ end;
 
 procedure TFrmPassGen.FormShow(Sender: TObject);
 begin
+  if cSpecial.IsEmpty = true then
+  begin
+      cSpecial := '°!"§$&/()=-+*?ß}{][@.,;:_~';       // allow others to modify special (need later to save this)
+      ChbSpeciEdit.Text := cSpecial;
+  end;
   BtnGener.OnClick(Self);
 end;
 
@@ -67,13 +75,13 @@ const
   cLower   = 'abcdefghijklmnopqrstuvwxyz';
   cUpper   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   cNumbers = '0123456789';
-  cSpecial = '°!"§$&/()=-+*?ß}{][@.,;:_~';
 var
   i : Integer;
   S : string;
   iM: BYTE;
 begin
   if Mode = [] then Exit;
+  cSpecial := ChbSpeciEdit.Text;                        // allow others to modify special
   i := 0;
   Randomize;
   while (i < iLength)  do

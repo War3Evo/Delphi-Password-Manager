@@ -26,8 +26,8 @@ object FrmPassGen: TFrmPassGen
     TabOrder = 3
     object ChbLower: TCheckBox
       IsChecked = True
-      Position.X = 16.000000000000000000
-      Position.Y = 24.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 16.000000000000000000
       Size.Width = 281.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
@@ -37,8 +37,8 @@ object FrmPassGen: TFrmPassGen
     end
     object ChbUpper: TCheckBox
       IsChecked = True
-      Position.X = 16.000000000000000000
-      Position.Y = 48.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 40.000000000000000000
       Size.Width = 281.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
@@ -48,8 +48,8 @@ object FrmPassGen: TFrmPassGen
     end
     object ChbNumbe: TCheckBox
       IsChecked = True
-      Position.X = 16.000000000000000000
-      Position.Y = 72.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 64.000000000000000000
       Size.Width = 281.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
@@ -59,8 +59,8 @@ object FrmPassGen: TFrmPassGen
     end
     object ChbSpeci: TCheckBox
       IsChecked = True
-      Position.X = 16.000000000000000000
-      Position.Y = 96.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 88.000000000000000000
       Size.Width = 281.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
@@ -68,6 +68,15 @@ object FrmPassGen: TFrmPassGen
       Text = 'Special characters'
       OnChange = ChbPModeClick
       OnClick = ChbSpeciClick
+    end
+    object ChbSpeciEdit: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 38
+      Position.X = 8.000000000000000000
+      Position.Y = 118.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
     end
   end
   object EdtResul: TEdit
@@ -100,7 +109,7 @@ object FrmPassGen: TFrmPassGen
       Cursor = crIBeam
       Min = 6.000000000000000000
       Max = 64.000000000000000000
-      Value = 10.000000000000000000
+      Value = 24.000000000000000000
       Position.X = 16.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 100.000000000000000000

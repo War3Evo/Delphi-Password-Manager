@@ -127,9 +127,9 @@ object FrmLogin: TFrmLogin
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 1
     Password = True
-    Position.X = 88.000000000000000000
+    Position.X = 80.000000000000000000
     Position.Y = 136.000000000000000000
-    Size.Width = 161.000000000000000000
+    Size.Width = 232.000000000000000000
     Size.Height = 32.000000000000000000
     Size.PlatformDefault = False
     object PebPasVie: TPasswordEditButton

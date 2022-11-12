@@ -1,3 +1,9 @@
+{
+  // future plans:
+  // use this https://github.com/War3Evo/DelphiEncryptionCompendium
+  // to wrap the database in extra encryption when done with the database
+}
+
 unit Login;
 
 interface
@@ -94,6 +100,10 @@ begin
   iTimesLogi := 0;
   bConnected := false;
   DM.FDConnection.Params.Values['Database'] := 'PassList.s3db';
+
+  // https://docwiki.embarcadero.com/RADStudio/Sydney/en/Using_SQLite_with_FireDAC
+  DM.FDConnection.Params.Values['Encrypt'] := 'aes-256';                          // usually default, but just making sure
+
   {$IF DEFINED(iOS) or DEFINED(ANDROID) or DEFINED(MacOS)}
     DM.FDConnection.Params.Values['Database'] :=
       TPath.Combine(TPath.GetSharedDocumentsPath, 'PassList.s3db');
@@ -125,7 +135,9 @@ begin
     EdtPassword.Position.X := LblPassword.Width + 14;
   end
   else
+  begin
     bEncrypted := true;
+  end;
 end;
 
 end.

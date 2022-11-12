@@ -2,6 +2,6 @@
 <BorlandProject>
 	<ActiveMobileDevice>
 		<PMacOS iOSSimulator="iPhone5"/>
-		<NoProfile Android="fbc8034"/>
+		<NoProfile Android=""/>
 	</ActiveMobileDevice>
 </BorlandProject>

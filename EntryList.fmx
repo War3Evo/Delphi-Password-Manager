@@ -210,11 +210,11 @@ object FrmEntryList: TFrmEntryList
             AutoSize = True
             Position.X = 8.000000000000000000
             Position.Y = 88.000000000000000000
-            Size.Width = 54.000000000000000000
+            Size.Width = 199.000000000000000000
             Size.Height = 16.000000000000000000
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
-            Text = 'Username'
+            Text = 'Login Username or Email or whatever'
             TabOrder = 170
           end
           object EdtUserN: TEdit
@@ -338,6 +338,7 @@ object FrmEntryList: TFrmEntryList
             TabOrder = 174
           end
           object DteDateC: TDateEdit
+            ShowClearButton = True
             Date = 42673.000000000000000000
             Position.X = 8.000000000000000000
             Position.Y = 440.000000000000000000
@@ -478,7 +479,7 @@ object FrmEntryList: TFrmEntryList
     Position.X = 168.000000000000000000
     Position.Y = 44.000000000000000000
     Size.Width = 185.000000000000000000
-    Size.Height = 61.000000000000000000
+    Size.Height = 101.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     XRadius = 8.000000000000000000
@@ -499,7 +500,7 @@ object FrmEntryList: TFrmEntryList
     object OverflowMenu: TListBox
       Align = Top
       Size.Width = 185.000000000000000000
-      Size.Height = 60.000000000000000000
+      Size.Height = 101.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'transparentlistboxstyle'
       TabOrder = 0
@@ -509,13 +510,24 @@ object FrmEntryList: TFrmEntryList
       DefaultItemStyles.GroupHeaderStyle = ''
       DefaultItemStyles.GroupFooterStyle = ''
       Viewport.Width = 185.000000000000000000
-      Viewport.Height = 60.000000000000000000
+      Viewport.Height = 101.000000000000000000
+      object LbiImport: TListBoxItem
+        TextSettings.HorzAlign = Center
+        StyledSettings = [Family, Size, Style, FontColor]
+        Size.Width = 185.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Import...'
+        OnClick = LbiImportClick
+      end
       object LbiSettings: TListBoxItem
         Selectable = False
         TextSettings.HorzAlign = Center
         StyledSettings = [Family, Size, Style, FontColor]
+        Position.Y = 32.000000000000000000
         Size.Width = 185.000000000000000000
-        Size.Height = 30.000000000000000000
+        Size.Height = 32.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         Text = 'Settings'
@@ -525,9 +537,9 @@ object FrmEntryList: TFrmEntryList
         Selectable = False
         TextSettings.HorzAlign = Center
         StyledSettings = [Family, Size, Style, FontColor]
-        Position.Y = 30.000000000000000000
+        Position.Y = 64.000000000000000000
         Size.Width = 185.000000000000000000
-        Size.Height = 30.000000000000000000
+        Size.Height = 32.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         Text = 'Info'
