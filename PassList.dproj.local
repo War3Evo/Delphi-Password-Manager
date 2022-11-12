@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<ActiveMobileDevice>
-		<PMacOS iOSSimulator="iPhone5"/>
-		<NoProfile Android=""/>
-	</ActiveMobileDevice>
-</BorlandProject>
